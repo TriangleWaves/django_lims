@@ -1,0 +1,72 @@
+{% extends "admin/base_site.html" %}
+{% block extrahead %}
+<style>
+#message {text-align:center;margin:10px 0;} #message a {padding:0 10px;} #images {text-align:center;overflow:hidden;} .image {margin:20px auto;padding:10px 0 2px;} .image img {max-width:500px;} .control_image {margin-left:20px;}
+</style>
+<script type="text/javascript" src="/admin_media/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.image:odd').css('background','#ddd');
+});
+function select(n) {
+	if (n == 1) {
+		$('#familyid').val(0);
+	} else {
+		$('#patientid').val(0);
+	}
+	submit();
+}
+
+function submit() {
+	
+	$('#reportform').submit();
+}
+</script>
+{% endblock %}
+
+{% block title %}Patient Report{% endblock %}
+{% block content %}
+<div id="content-main">
+	<div id="control"><form id="reportform" action="/admin/patient/report/" method="get">
+	<p>Patient: &nbsp;&nbsp;&nbsp;&nbsp;
+	<select name="patientid" id="patientid" onchange="javascript:select(1);">	
+		<option value="0">Select Patient</option>
+		{% for p in patient_list %}
+			<option value="{{ p.id }}" {% if p.id == patientid %}selected="selected"{% endif %}>{{ p }}</option>
+		{% endfor %}
+	</select>
+	 &nbsp;&nbsp;&nbsp;&nbsp;Family: &nbsp;&nbsp;&nbsp;&nbsp;
+	<select name="familyid" id="familyid" onchange="javascript:select(2);">
+		<option value="0">Select Family</option>
+		{% for fid in family_ids %}
+			<option value="{{ fid }}" {% if fid == familyid %}selected="selected"{% endif %}>{{ fid }}</option>
+		{% endfor %}
+	</select>
+	</p><p>
+	Include: &nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" name="include" {% if 'fb' in include %}checked="checked"{% endif %} value="fb" onchange="javascript:submit();" /> Fibroblast&nbsp;&nbsp;
+	<input type="checkbox" name="include" {% if 'ips' in include %}checked="checked"{% endif %} value="ips" onchange="javascript:submit();"  /> iPS&nbsp;&nbsp;
+	<input type="checkbox" name="include" {% if 'np' in include %}checked="checked"{% endif %} value="np" onchange="javascript:submit();"  /> Neuronal Progenitor
+	</p></form></div>
+	{% if no_image %}
+		<div id="message">
+			<p>No Images Found for the selected Patient.</p>
+			<p><a href="{{ url }}">Upload an image</a></p>
+		</div>
+	{% else %}
+		<div id="images">
+			{% for image in images %}
+				<div class="image">
+					<p>
+						<img src="{{ image.url }}" />
+						{% if image.control_url %}
+						<img class="control_image" src="{{ image.control_url }}" />
+						{% endif %}
+					</p>
+					<p><a href="{{ image.link }}">{{ image.title }}</a></p>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+</div>
+{% endblock %}

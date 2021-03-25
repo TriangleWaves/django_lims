@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load adminmedia admin_list i18n %}
+
+{% block title %}iPS Report{% endblock %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="/admin_media/css/changelists.css" />
+  <link rel="stylesheet" type="text/css" href="/admin_media/css/forms.css" />
+  {{ media.css }}
+    <style>
+      #changelist table thead th:first-child {width: inherit;} #message {text-align:center;margin:10px 0;} #message a {padding:0 10px;}
+    </style>
+{% endblock %}
+
+{% block bodyclass %}change-list{% endblock %}
+
+{% if not is_popup %}{% block breadcrumbs %}<div class="breadcrumbs"><a href="/">{% trans "Home" %}</a> &rsaquo; Reports</div>{% endblock %}{% endif %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+<!-- Content -->
+<div id="content" class="flex">
+
+<h1>Sequencing Progress Report</h1>
+<div id="content-main">
+<div class="module unfiltered" id="changelist">
+   {% if results %}
+     <table cellspacing="0">
+       <thead>
+         <tr>
+           <th class="sorted ascending"><a href="?ot=desc&amp;o=0">Family ID</a></th>
+           <th><a href="?ot=asc&amp;o=1">Family Member</a></th>
+           <th><a href="?ot=asc&amp;o=2">iPS Number</a></th>
+<!--
+           <th><a href="?ot=asc&amp;o=3">Type</a></th>
+           <th><a href="?ot=asc&amp;o=4">End</a></th>
+           <th><a href="?ot=asc&amp;o=5">Submission date</a></th>
+           <th><a href="?ot=asc&amp;o=6">Sequencing facility</a></th>
+           <th><a href="?ot=asc&amp;o=7">Flow cell ID</a></th>
+           <th><a href="?ot=asc&amp;o=8">Lane Number</a></th>
+-->
+         </tr>
+       </thead>
+       <tbody>
+     {% for row in results %}
+       <tr class="{% cycle 'row1' 'row2' %}">
+       {% for field in row %}
+         <td>{{ field }}</td>
+       {% endfor %}
+       </tr>
+     {% endfor %}
+     </tbody>
+     </table>
+   {% else %}
+     <p>No data is available.</p>
+   {% endif %}
+</div>
+</div>
+{% endblock %}

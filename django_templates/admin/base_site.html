@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'TW Lab iPS Database' %}{% endblock %}
+
+{% block branding %}
+<a href="/"><h1 id="site-name">{% trans 'TW Lab iPS Database' %}</h1></a>
+{% endblock %}
+
+{% block nav-global %}
+{% if user.is_authenticated %}
+    <p style="text-indent:12px;"><a href="/admin/patient/report/">QC Images</a> &#183; <a href="/admin/patient/flowcell/">Sequencing Summary</a> &#183; <a href="/admin/patient/ipsc/">iPS Summary</a> &#183; <a href="http://database.trianglewaves.com/lims/document/1/">Patient File Report</a> &#183; <a href="http://database.trianglewaves.com/lims/document/2/">Samples Submitted to NIH</a></p>
+{% else %}
+{% endif %}
+{% endblock %}
