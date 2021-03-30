@@ -23,3 +23,16 @@ https://registry.hub.docker.com/_/ubuntu-debootstrap?tab=tags
 * Run server
 
     `$ python django_projects/tw/manage.py runserver`
+
+* Docker setup
+  
+    `$ sudo docker-compose up --build -d`
+
+* To see logs
+
+    `$ sudo docker-compose logs -f`
+
+* If you get some error of create super user than do this
+
+    `$ sudo docker exec -t django_lims_web_1 /bin/bash`
+    `$ python django_project/tw/manage.py createsuperuser`

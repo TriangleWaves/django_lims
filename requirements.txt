@@ -3,3 +3,4 @@ gunicorn==19.10.0
 Pillow==6.2.2
 python-dotenv==0.16.0
 typing==3.7.4.3
+mysqlclient
