@@ -1,6 +1,9 @@
 # Django settings for tw project.
 
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -13,14 +16,20 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'user',                      # Or path to database file if using sqlite3.
-        'USER': 'user',                      # Not used with sqlite3.
-        'PASSWORD': 'passwd',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': os.getenv('DATABASE_NAME'),                      # Or path to database file if using sqlite3.
+        'USER': os.getenv('DATABASE_USER'),                      # Not used with sqlite3.
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),                  # Not used with sqlite3.
+        'HOST': os.getenv('DATABASE_HOST'),                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': os.getenv('DATABASE_PORT'),                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'django_lims',
+#     }
+# }
 
 ROOT_PATH = os.path.dirname(__file__)
 
@@ -54,7 +63,7 @@ MEDIA_ROOT = ROOT_PATH + '/media'
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = 'http://vip-ipsdatabase.its.yale.edu/media/'
+MEDIA_URL = os.getenv('MEDIA_URL')
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -85,7 +94,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/home/mike/django_templates',
+    'django_templates',
 )
 
 INSTALLED_APPS = (

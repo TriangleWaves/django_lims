@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  web:
+    build: .
+    command: bash -c "python /code/django_src/setup.py install && python /code/django_projects/tw/manage.py syncdb && python /code/django_projects/tw/manage.py runserver 0.0.0.0:8000"
+    volumes:
+    - .:/code
+    ports:
+    - 8000:8000
+    env_file:
+      - .env
